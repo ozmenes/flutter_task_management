@@ -10,13 +10,13 @@ class CustomBtn extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
+        height: 48,
         width: 120,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(pixel),
           color: primaryColor
         ),
-        child: Center(child: Text(label,style: const TextStyle(color: Colors.white),)),
+        child: Center(child: Text(label,style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w500),)),
       ),
     );
   }

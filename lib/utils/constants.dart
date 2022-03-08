@@ -6,12 +6,12 @@ double pixel = 16;
 EdgeInsets defPadding = EdgeInsets.symmetric(horizontal: pixel);
 
 const bgColor = Color(0xFF121212);
-const Color _blue = Color(0xFF4e5ae8);
-const Color _yellow = Color(0xFFFFB746);
-const Color _pink = Color(0xFFff4667);
+const Color blueColor = Color(0xFF4e5ae8);
+const Color yellowColor = Color(0xFFFFB746);
+const Color pinkColor = Color(0xFFff4667);
 const Color _white = Colors.white;
-const primaryColor = _blue;
-final Color _darHeader = Colors.grey.shade800;
+const primaryColor = blueColor;
+final Color darHeader = Colors.grey.shade800;
 
 
 class MyThemes {
@@ -19,9 +19,9 @@ class MyThemes {
     fontFamily: 'ProductSans',
     brightness: Brightness.dark,
     scaffoldBackgroundColor: bgColor,
-    backgroundColor: _darHeader,
+    backgroundColor: darHeader,
     colorScheme: const ColorScheme.dark(),
-    primaryColor: _darHeader,
+    primaryColor: darHeader,
     secondaryHeaderColor: Colors.grey.shade900.withOpacity(0.5),
     iconTheme: IconThemeData(color: Colors.purple.shade200),
     appBarTheme: AppBarTheme(
@@ -72,7 +72,7 @@ class MyThemes {
     backgroundColor: _white,
     colorScheme: const ColorScheme.light(),
     brightness: Brightness.light,
-    primaryColor: _blue,
+    primaryColor: blueColor,
     secondaryHeaderColor: Colors.grey.shade200,
     iconTheme: IconThemeData(
       color: Colors.purple.shade700,
@@ -134,6 +134,24 @@ TextStyle get headingStyle{
           fontSize: 30,
           fontWeight: FontWeight.bold,
           color: Get.isDarkMode?Colors.white:Colors.black
+      )
+  );
+}
+TextStyle get titleStyle{
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: Get.isDarkMode?Colors.white:Colors.black
+      )
+  );
+}
+TextStyle get subTitleStyle{
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Colors.grey.shade400
       )
   );
 }

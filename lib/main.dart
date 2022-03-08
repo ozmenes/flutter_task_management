@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:task_management/database/database_helper.dart';
 
 import 'utils/constants.dart';
 import 'pages/homepage.dart';
@@ -9,6 +10,7 @@ import 'providers/theme_provider.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await DBHelper.initDb();
   await GetStorage.init();
   runApp(const MyApp());
 }
