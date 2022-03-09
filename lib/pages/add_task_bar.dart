@@ -6,7 +6,7 @@ import 'package:task_management/utils/constants.dart';
 import 'package:task_management/widgets/custom_btn.dart';
 
 import '../models/task.dart';
-import 'input_field.dart';
+import '../widgets/input_field.dart';
 
 class AddTaskBar extends StatefulWidget {
   const AddTaskBar({Key? key}) : super(key: key);
@@ -20,10 +20,12 @@ class _AddTaskBarState extends State<AddTaskBar> {
   final _titleEditingController = TextEditingController();
   final _noteEditingController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
-  String _endTime = "23:59";
-  String _startTime = DateFormat.Hm().format(DateTime.now()).toString();
+  String _startTime = DateFormat('HH:mm')
+      .format(DateTime.now())
+      .toString(); //DateFormat.jm('de_DE').format(DateTime.now()).toString();//DateFormat("hh:mm a").format(DateTime.now()).toString();
+  late String _endTime = _startTime; //"23:59";
   int _selectedRemind = 5;
-  List<int> remindList = [5, 10, 15, 20];
+  List<int> remindList = [5, 10, 15, 20, 30];
   String _selectedRepeat = "None";
   List<String> repeatList = [
     "None",
@@ -66,7 +68,6 @@ class _AddTaskBarState extends State<AddTaskBar> {
                 widget: IconButton(
                   icon: const Icon(Icons.calendar_today_outlined),
                   onPressed: () {
-                    debugPrint('hi');
                     _getDateFromUser();
                   },
                 ),
@@ -159,7 +160,7 @@ class _AddTaskBarState extends State<AddTaskBar> {
                   children: [
                     _colorPalette(),
                     CustomBtn(
-                        onTap: (){
+                        onTap: () {
                           _validateTitleAndNote();
                           //_addTaskToDB();
                         },
@@ -173,22 +174,22 @@ class _AddTaskBarState extends State<AddTaskBar> {
       ),
     );
   }
-  _addTaskToDB()async{
+
+  _addTaskToDB() async {
     int value = await _taskController.addTask(
-      task: Task(
-          isCompleted: 0,
-          color: _selectedColor,
-          remind: _selectedRemind,
-          title: _titleEditingController.text,
-          note: _noteEditingController.text,
-          date: DateFormat.yMd().format(_selectedDate),
-          startTime: _startTime,
-          endTime: _endTime,
-          repeat: _selectedRepeat
-      )
-    );
-    debugPrint("id: "+value.toString());
+        task: Task(
+            isCompleted: 0,
+            color: _selectedColor,
+            remind: _selectedRemind,
+            title: _titleEditingController.text,
+            note: _noteEditingController.text,
+            date: DateFormat.yMd().format(_selectedDate),
+            startTime: _startTime,
+            endTime: _endTime,
+            repeat: _selectedRepeat));
+    debugPrint("id: " + value.toString());
   }
+
   _validateTitleAndNote() {
     if (_titleEditingController.text.isNotEmpty &&
         _noteEditingController.text.isNotEmpty) {
@@ -271,10 +272,17 @@ class _AddTaskBarState extends State<AddTaskBar> {
   _showTimePicker() {
     return showTimePicker(
         context: context,
+        //initialTime: TimeOfDay(hour: 0, minute: 0),
         initialTime: TimeOfDay(
           hour: int.parse(_startTime.split(":")[0]),
-          minute: int.parse(_startTime.split(":")[1]),
+          minute: int.parse(_startTime.split(":")[1]),//.split(' ')[0]),
         ),
+        builder: (BuildContext context, Widget? child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+            child: child!,
+          );
+        },
         initialEntryMode: TimePickerEntryMode.input);
   }
 

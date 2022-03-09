@@ -9,7 +9,7 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       //padding: const EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width - 33,
       //margin: const EdgeInsets.only(bottom: 12),
@@ -18,7 +18,7 @@ class TaskTile extends StatelessWidget {
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: _getBGClr(task?.color ?? 0),
+          color: task!.isCompleted == 1 ? Colors.grey.shade600:_getBGClr(task?.color ?? 0),
         ),
         child: Row(children: [
           Expanded(
@@ -56,11 +56,26 @@ class TaskTile extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 12),
-                Text(
-                  task?.date ?? "",
-                  style: GoogleFonts.lato(
-                    textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      task?.repeat ?? "",
+                      style: GoogleFonts.lato(
+                        textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 18.0),
+                      child: Text(
+                        '${task?.remind.toString()} minutes early',
+                        style: GoogleFonts.lato(
+                          textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
+                        ),
+                      ),
+                    ),
+
+                  ],
                 ),
                 const SizedBox(height: 12),
                 Text(

@@ -4,7 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:task_management/widgets/add_task_bar.dart';
+import 'package:task_management/pages/add_task_bar.dart';
 import 'package:task_management/widgets/tasktile.dart';
 import '../controllers/task_controller.dart';
 import '../models/task.dart';
@@ -66,6 +66,10 @@ class _HomePageState extends State<HomePage> {
             Task task = _tasksController.taskList[index];
             debugPrint('task ${task.toJson()}');
             if(task.repeat == 'Daily'){
+              DateTime date = DateFormat.Hm().parse(task.startTime.toString());
+              var _time = DateFormat.Hm().format(date);
+              debugPrint('alarm $_time');
+              notifyHelper.scheduledNotification(task, int.parse(_time.toString().split(':')[0]),int.parse(_time.toString().split(':')[1]));
               return Padding(
                 padding: EdgeInsets.only(bottom: pixel),
                 child: AnimationConfiguration.staggeredList(
@@ -281,11 +285,11 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           ThemeService().switchTheme();
           notifyHelper.displayNotification(
-              title: "Theme",
+              title: "Theme Changed",
               body: Get.isDarkMode
                   ? "Activated Light Theme"
                   : "Activated Dark Theme");
-          notifyHelper.scheduledNotification();
+          //notifyHelper.scheduledNotification();
         },
         icon: Icon(
             Get.isDarkMode ? Icons.wb_sunny_outlined : Icons.nightlight_round,
